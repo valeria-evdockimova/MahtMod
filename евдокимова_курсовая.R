@@ -61,7 +61,7 @@ teach = sample(row_numbers, floor(length(tb1$date)*.7))
 test = row_numbers[-teach] 
 teaching_tb1_unq = tb1[teach,] 
 testing_tb1_unq = tb1[test,] 
-#создание и анализ модели множественной регрессии
+#создание и анализ модели множественной регрессии c взаимодействием
 mod1=lm((h2o_flux ~ DOY + Tau + rand_err_Tau + H + rand_err_H + LE + qc_LE + 
            rand_err_LE + co2_flux + rand_err_co2_flux + h2o_flux + qc_h2o_flux + 
            rand_err_h2o_flux + H_strg + co2_molar_density + h2o_time_lag + 
@@ -76,27 +76,19 @@ confint(mod1)
 summary(mod1)
 anova(mod1)
 
-mod2=lm((h2o_flux ~ Tau + H  + LE + rand_err_LE + rand_err_co2_flux + h2o_flux +
-           rand_err_h2o_flux + H_strg+ T. + un_Tau + un_H + un_LE + 
-           un_h2o_flux  + w.ts_cov  + w.h2o_cov)^2,data=tb1)
-coef(mod2) 
-resid(mod2) 
-confint(mo2)
-summary(mod2)
-anova(mod2)
 
-mod3=lm((h2o_flux ~ DOY + Tau  + H  + LE  + 
+mod2=lm((h2o_flux ~ DOY + Tau  + H  + LE  + 
            co2_flux + h2o_flux  + 
            H_strg + co2_molar_density + h2o_time_lag + 
            sonic_temperature + air_temperature + air_density + air_molar_volume + 
            es + RH + VPD + u. + TKE + T.)^2,data=tb1)
-coef(mod3) 
-resid(mod3) 
-confint(mod3)
-summary(mod3)
-anova(mod3)
+coef(mod2) 
+resid(mod2) 
+confint(mod2)
+summary(mod2)
+anova(mod2)
 
-mod4=lm((h2o_flux ~ DOY + Tau  + H  + LE  + 
+mod3=lm((h2o_flux ~ DOY + Tau  + H  + LE  + 
            co2_flux + h2o_flux  + 
            H_strg + co2_molar_density + h2o_time_lag + 
            sonic_temperature + air_temperature + air_density + air_molar_volume + 
@@ -107,11 +99,11 @@ mod4=lm((h2o_flux ~ DOY + Tau  + H  + LE  +
         - co2_molar_density:u.-co2_molar_density:T.-h2o_time_lag:u.  
         -h2o_time_lag:T.-sonic_temperature:RH -air_density:VPD-air_density:u.
         -air_molar_volume:u.-es:RH-air_molar_volume:es ,data=tb1)
-coef(mod4) 
-resid(mod4) 
-confint(mod4)
-summary(mod4)
-anova(mod4)
-plot(mod4)
-#Оптимальна модель-4
+coef(mod3) 
+resid(mod3) 
+confint(mod3)
+summary(mod3)
+anova(mod3)
+plot(mod3)
+#Оптимальна модель-3
 
